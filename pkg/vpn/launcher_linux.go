@@ -233,6 +233,10 @@ func bitmaskRootPath() (string, error) {
 			return path, nil
 		}
 	}
+	path, err := exec.LookPath("bitmask-root")
+	if err == nil {
+		return path, nil
+	}
 	log.Println("Can't find bitmask-root")
 	return "", errors.New("nohelpers")
 }
@@ -240,6 +244,10 @@ func bitmaskRootPath() (string, error) {
 func getOpenvpnPath() string {
 	if os.Getenv("SNAP") != "" {
 		return "/snap/bin/" + config.BinaryName + ".openvpn"
+	}
+	path, err := exec.LookPath("openvpn")
+	if err == nil {
+		return path
 	}
 	return systemOpenvpnPath
 }
